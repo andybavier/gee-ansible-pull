@@ -34,15 +34,15 @@
       - 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEArlgZWcRP75W2/e5bKG1FEeec1OJQuw9dGVyo3TdUgVu4F0/JgBsgR2BrTuQ+mzm+N47ZkSrYwLdAJGuvL7ECxc6aouQ6AtQ/biU1gsrfuPnnUBjfAGqlP/L77lYxpLAPglx/HCCBu53gLKVt8lRDyyGZaWnB7fGlnwrn5AMjcfXsz5Ia8W6oBmxy2fxDSR9SpTs5yAzfcj37mCBtOZBwdjb54B36WpFq9BwFrEXxbvxH4aU0WSneJagicZuCUXnTg2YSURBD0jBmTrYOVRfTZzNPyagOvuIhnnakOSGkGa8s4SrC5zymZsVPdQbp6icRsu6OjKZ83Y0oiTQ4rTaeUw== acb@cadenza.cs.princeton.edu'
       - 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1HQWcDWkJYsuLu/YEwyg6H91Jy6fPbAt+WZd9oeZ+50eV37dcIZJbOALdztdrbbDCjbpFhzwsHAnzef7zV+nFhpA/bXt9JUjeGc3CEJAh9854rjoVT7lobnhi2WQHNpVOPgAPEwG4myH09tgrM+KVgDx26Zbrf7ExX7Q96ivxVmOMSoV63+0EuTClPQJ3z6j3ImGBbOz2+mybyTFlpFP4UOi8tnSOFhjhSOijcbMwru5jWUUg9M/WW2L81k/hV1hLCvbLJ6+dAq2JYoLocRBEYHLQBOF4g8VCA0WhwwjNEwK+k7Ax6CBu+37K26rz/pH8xHTKDX3IfFOinO8xl0w4Q== rmcgeer@rmcgeer-nc4010'
 
-  #- name: Set up extra disk
-  #  shell: sudo /usr/testbed/bin/mkextrafs /mnt
-  #    creates=/mnt/local
+  - name: Set up extra disk
+    shell: sudo /usr/testbed/bin/mkextrafs /mnt
+      creates=/mnt/local
 
-  #- name: Create docker dir on /mnt/docker
-  #  file: path=/mnt/docker
-  #    state=directory
-  #    owner=gee
-  #    group=docker
+  - name: Create docker dir on /mnt/docker
+    file: path=/mnt/docker
+      state=directory
+      owner=gee
+      group=docker
 
   - name: Docker config file
     template: src=templates/docker
