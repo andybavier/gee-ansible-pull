@@ -31,6 +31,11 @@
   - name: Create local directory to work from
     file: path={{workdir}} state=directory owner=root group=root mode=0751
 
+  - name: Pull repo to get github.com host key (workaround)
+    git: repo={{ repo_url }} 
+      dest=/tmp/trash
+      accept_hostkey=True
+
   - name: Create crontab entry to clone/pull git repository
     template: src=templates/etc/cron.d/ansible-pull.j2 dest=/etc/cron.d/ansible-pull owner=root group=root mode=0644
 
