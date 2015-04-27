@@ -50,7 +50,7 @@
       mode=0755
 
   - name: Configure monit
-    copy: src=files/{{ item.name }}
+    copy: src=files/{{ item }}
       dest=/etc/monit/conf.d/{{ item }}
     with_items:
     - docker.conf
