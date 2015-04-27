@@ -35,7 +35,7 @@
       - 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1HQWcDWkJYsuLu/YEwyg6H91Jy6fPbAt+WZd9oeZ+50eV37dcIZJbOALdztdrbbDCjbpFhzwsHAnzef7zV+nFhpA/bXt9JUjeGc3CEJAh9854rjoVT7lobnhi2WQHNpVOPgAPEwG4myH09tgrM+KVgDx26Zbrf7ExX7Q96ivxVmOMSoV63+0EuTClPQJ3z6j3ImGBbOz2+mybyTFlpFP4UOi8tnSOFhjhSOijcbMwru5jWUUg9M/WW2L81k/hV1hLCvbLJ6+dAq2JYoLocRBEYHLQBOF4g8VCA0WhwwjNEwK+k7Ax6CBu+37K26rz/pH8xHTKDX3IfFOinO8xl0w4Q== rmcgeer@rmcgeer-nc4010'
 
   - name: Set up extra disk
-    shell: sudo /usr/testbed/bin/mkextrafs /mnt
+    shell: /usr/testbed/bin/mkextrafs /mnt
       creates=/mnt/local
 
   - name: Docker config file
@@ -44,13 +44,18 @@
     notify:
     - restart docker
 
+  - name: Install "dosh", the Docker shell for GEE
+    copy: src=files/dosh
+      dest=/usr/local/sbin/dosh
+      mode=0755
+
   - name: Configure monit
     copy: src=files/{{ item.name }}
-      dest=/etc/monit/conf.d/{{ item.name }}
+      dest=/etc/monit/conf.d/{{ item }}
     with_items:
-    - name: docker.conf
-    - name: http.conf
-    - name: xvda1.conf
+    - docker.conf
+    - http.conf
+    - xvda1.conf
     notify:
     - restart monit
 
