@@ -38,12 +38,6 @@
     shell: sudo /usr/testbed/bin/mkextrafs /mnt
       creates=/mnt/local
 
-  - name: Create docker dir on /mnt/docker
-    file: path=/mnt/docker
-      state=directory
-      owner=gee
-      group=docker
-
   - name: Docker config file
     template: src=templates/docker
       dest=/etc/default/docker
