@@ -19,13 +19,13 @@ create_tunnel() {
 }
 
 patch_bridges() { 
-    ovs-vsctl add-port br-tun patch-ovs
-    ovs-vsctl set interface patch-ovs type=patch
-    ovs-vsctl set interface patch-ovs options:peer=patch-docker
+    ovs-vsctl add-port docker0 patch-br-tun
+    ovs-vsctl set interface patch-br-tun type=patch
+    ovs-vsctl set interface patch-br-tun options:peer=patch-docker0
 
-    ovs-vsctl add-port br-tun patch-docker
-    ovs-vsctl set interface patch-docker type=patch
-    ovs-vsctl set interface patch-docker options:peer=patch-ovs
+    ovs-vsctl add-port br-tun patch-docker0
+    ovs-vsctl set interface patch-docker0 type=patch
+    ovs-vsctl set interface patch-docker0 options:peer=patch-br-tun
 }
 
 no_arp_flood() {
