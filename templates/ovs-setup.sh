@@ -1,7 +1,5 @@
 #!/bin/sh
 
-MY_IP=$( hostname -i )
-
 create_tunnel() {
     HOST=$1
     LABEL=$2
@@ -15,7 +13,9 @@ create_tunnel() {
 
     ovs-vsctl add-port br-tun $IFACE
     ovs-vsctl set interface $IFACE type=gre options:remote_ip=$IP
-    ovs-ofctl mod-port br-tun $IFACE noflood
+
+    MY_PORT=$( ovs-vsctl get interface $IFACE ofport )
+    ovs-ofctl add-flow br-tun in_port=$MY_PORT,priority=10,dl_dst="ff:ff:ff:ff:ff:ff",action=output:$DOCKER0_PORT
 }
 
 patch_bridges() { 
@@ -28,18 +28,14 @@ patch_bridges() {
     ovs-vsctl set interface patch-docker0 options:peer=patch-br-tun
 }
 
-no_arp_flood() {
-    PORT=$( ovs-vsctl get interface patch-docker0 ofport )
-    # These rules assume that all the GRE tunnel ports are in 'noflood' mode
-    ovs-ofctl add-flow br-tun in_port=$PORT,priority=20,dl_dst="ff:ff:ff:ff:ff:ff",action=all
-    ovs-ofctl add-flow br-tun priority=10,dl_dst="ff:ff:ff:ff:ff:ff",action=flood
-}
+MY_IP=$( hostname -i )
 
 patch_bridges
+
+DOCKER0_PORT=$( ovs-vsctl get interface patch-docker0 ofport )
+ovs-ofctl add-flow br-tun in_port=$DOCKER0_PORT,priority=20,dl_dst="ff:ff:ff:ff:ff:ff",action=all
 
 {% for host in groups['nodes'] %}
 create_tunnel {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['label'] }}
 {% endfor %}
-
-no_arp_flood
 
