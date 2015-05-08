@@ -29,7 +29,7 @@ patch_bridges() {
 }
 
 no_arp_flood() {
-    PORT=$( ovs-vsctl get interface patch-docker ofport )
+    PORT=$( ovs-vsctl get interface patch-docker0 ofport )
     # These rules assume that all the GRE tunnel ports are in 'noflood' mode
     ovs-ofctl add-flow br-tun in_port=$PORT,priority=20,dl_dst="ff:ff:ff:ff:ff:ff",action=all
     ovs-ofctl add-flow br-tun priority=10,dl_dst="ff:ff:ff:ff:ff:ff",action=flood
