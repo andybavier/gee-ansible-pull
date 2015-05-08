@@ -11,6 +11,7 @@
     with_items:
     - apt-transport-https
     - monit
+    - openvswitch-switch
 
   - name: Docker repository
     copy: src=files/docker.list
@@ -43,6 +44,7 @@
       dest=/etc/default/docker
     notify:
     - restart docker
+    - Add docker0 as a port on br-tun
 
   - name: Install "dosh", the Docker shell for GEE
     copy: src=files/dosh
@@ -59,9 +61,28 @@
     notify:
     - restart monit
 
+  - name: Create br-tun
+    openvswitch_bridge: bridge=br-tun state=present
+
+  - name: Add docker0 as a port on br-tun
+    openvswitch_port: bridge=br-tun port=docker0 state=present
+
+  - name: ovs-setup script
+    template: src=templates/ovs-setup.sh
+      dest=/usr/local/sbin/ovs-setup.sh
+      mode=0755
+    notify:
+    - Set up OVS
+
   handlers:
   - name: restart docker
     shell: "service docker stop; ip link del docker0; service docker start"
 
+  - name: Add docker0 as a port on br-tun
+    openvswitch_port: bridge=br-tun port=docker0 state=present
+
   - name: restart monit
     service: name=monit state=restarted
+
+  - name: Set up OVS
+    shell: /usr/local/sbin/ovs-setup.sh
