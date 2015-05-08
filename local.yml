@@ -13,6 +13,12 @@
     - monit
     - openvswitch-switch
 
+  - name: Create br-tun
+    openvswitch_bridge: bridge=br-tun state=present
+
+  - name: Create docker0
+    openvswitch_bridge: bridge=docker0 state=present
+
   - name: Docker repository
     copy: src=files/docker.list
       dest=/etc/apt/sources.list.d/docker.list
@@ -60,12 +66,6 @@
     - xvda1.conf
     notify:
     - restart monit
-
-  - name: Create br-tun
-    openvswitch_bridge: bridge=br-tun state=present
-
-  - name: Add docker0 as a port on br-tun
-    openvswitch_port: bridge=br-tun port=docker0 state=present
 
   - name: ovs-setup script
     template: src=templates/ovs-setup.sh
