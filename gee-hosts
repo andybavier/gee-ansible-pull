@@ -1,4 +1,4 @@
 [nodes]
-pcvm2-6.geni.case.edu                     docker_bip=10.0.0.1/16
-pcvm2-2.instageni.stanford.edu            docker_bip=10.1.0.1/16
-pcvm3-1.utahddc.geniracks.net             docker_bip=10.2.0.1/16
+pcvm2-2.geni.case.edu                     docker_bip=10.0.0.1/22   label=cwru
+pcvm3-15.instageni.stanford.edu           docker_bip=10.0.4.1/22   label=stanford
+pcvm9-4.utahddc.geniracks.net             docker_bip=10.0.12.1/22  label=utahddc
