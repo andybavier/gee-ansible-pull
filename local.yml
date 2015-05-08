@@ -76,7 +76,7 @@
 
   handlers:
   - name: restart docker
-    shell: "service docker stop; ip link del docker0; service docker start"
+    service: name=docker state=restarted
 
   - name: Add docker0 as a port on br-tun
     openvswitch_port: bridge=br-tun port=docker0 state=present
