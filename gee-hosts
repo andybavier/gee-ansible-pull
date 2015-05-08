@@ -3,6 +3,6 @@
 # The IP addresses for the containers are from docker_bip/22
 # So all containers have L2 connectivity 
 [nodes]
-pcvm2-2.geni.case.edu                     docker_bip=10.0.0.1/22   label=cwru
-pcvm3-15.instageni.stanford.edu           docker_bip=10.0.4.1/22   label=stanford
-pcvm9-4.utahddc.geniracks.net             docker_bip=10.0.12.1/22  label=utahddc
+pcvm2-2.geni.case.edu                     docker_bip=10.0.0.1   label=cwru
+pcvm3-15.instageni.stanford.edu           docker_bip=10.0.4.1   label=stanford
+pcvm9-4.utahddc.geniracks.net             docker_bip=10.0.12.1  label=utahddc
