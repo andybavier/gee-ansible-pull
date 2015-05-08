@@ -1,3 +1,7 @@
+# docker_bip is the IP address of the Docker bridge
+# Each bridge is configured with docker_bip on 10/8 subnet
+# The IP addresses for the containers are from docker_bip/22
+# So all containers have L2 connectivity 
 [nodes]
 pcvm2-2.geni.case.edu                     docker_bip=10.0.0.1/22   label=cwru
 pcvm3-15.instageni.stanford.edu           docker_bip=10.0.4.1/22   label=stanford
