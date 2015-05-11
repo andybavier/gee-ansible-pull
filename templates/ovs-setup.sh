@@ -23,20 +23,18 @@ create_tunnel() {
 }
 
 patch_bridges() { 
-    ovs-vsctl add-port docker0 patch-br-tun
-    ovs-vsctl set interface patch-br-tun type=patch
-    ovs-vsctl set interface patch-br-tun options:peer=patch-docker0
-
-    ovs-vsctl add-port br-tun patch-docker0
-    ovs-vsctl set interface patch-docker0 type=patch
-    ovs-vsctl set interface patch-docker0 options:peer=patch-br-tun
+    ip link add veth-docker0 type veth peer name veth-br-tun
+    brctl addif docker0 veth-br-tun
+    ovs-vsctl add-port br-tun veth-docker0
+    ifconfig veth-docker0 up
+    ifconfig veth-br-tun up
 }
 
 MY_IP=$( hostname -i )
 
 patch_bridges
 
-DOCKER0_PORT=$( ovs-vsctl get interface patch-docker0 ofport )
+DOCKER0_PORT=$( ovs-vsctl get interface veth-docker0 ofport )
 
 {% for host in groups['nodes'] %}
 create_tunnel {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['label'] }}

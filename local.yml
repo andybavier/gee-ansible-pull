@@ -12,6 +12,7 @@
     - apt-transport-https
     - monit
     - openvswitch-switch
+    - bridge-utils
 
   - name: Create br-tun
     openvswitch_bridge: bridge=br-tun state=present
