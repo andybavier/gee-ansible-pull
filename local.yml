@@ -1,4 +1,4 @@
----
+--
 - hosts: localhost
   connection: local
   sudo: yes
@@ -16,9 +16,6 @@
 
   - name: Create br-tun
     openvswitch_bridge: bridge=br-tun state=present
-
-  - name: Create docker0
-    openvswitch_bridge: bridge=docker0 state=present
 
   - name: Docker repository
     copy: src=files/docker.list
@@ -67,6 +64,9 @@
     - xvda1.conf
     notify:
     - restart monit
+
+  - name: Docker running
+    service: name=docker state=started
 
   - name: ovs-setup script
     template: src=templates/ovs-setup.sh
