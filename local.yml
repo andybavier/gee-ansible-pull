@@ -13,6 +13,15 @@
     - monit
     - openvswitch-switch
     - bridge-utils
+    - python-setuptools
+
+  # Had problems with python-pip package
+  - name: install pip
+    easy_install: name=pip
+
+  # Requirement to use Ansible
+  - name: install docker-py
+    pip: name=docker-py version=0.5.3
 
   - name: Create br-tun
     openvswitch_bridge: bridge=br-tun state=present
