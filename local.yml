@@ -48,7 +48,6 @@
       dest=/etc/default/docker
     notify:
     - restart docker
-    - Add docker0 as a port on br-tun
 
   - name: Install "dosh", the Docker shell for GEE
     copy: src=files/dosh
@@ -78,9 +77,6 @@
   handlers:
   - name: restart docker
     service: name=docker state=restarted
-
-  - name: Add docker0 as a port on br-tun
-    openvswitch_port: bridge=br-tun port=docker0 state=present
 
   - name: restart monit
     service: name=monit state=restarted
