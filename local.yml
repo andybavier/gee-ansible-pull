@@ -52,6 +52,9 @@
     shell: /usr/testbed/bin/mkextrafs /mnt
       creates=/mnt/local
 
+  - name: Create slices group
+    group: name=slices state=present
+
   - name: Docker config file
     template: src=templates/docker
       dest=/etc/default/docker
