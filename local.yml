@@ -55,6 +55,11 @@
   - name: Create slices group
     group: name=slices state=present
 
+  - name: Slices sudoers file
+    copy: src=files/slices
+      dest=/etc/sudoers.d/slices
+      mode=0600
+
   - name: Docker config file
     template: src=templates/docker
       dest=/etc/default/docker
