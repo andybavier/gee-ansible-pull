@@ -1,7 +1,2 @@
 #!/bin/sh
-if test $# = 0 
-then
-	docker exec -t -i $( whoami ) /bin/bash -l
-else
-	docker exec $( whoami ) /bin/bash -c "$*"
-fi
+sudo /usr/local/sbin/docker-bash $( whoami ) "$@"

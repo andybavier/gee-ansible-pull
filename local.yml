@@ -58,10 +58,14 @@
     notify:
     - restart docker
 
-  - name: Install "dosh", the Docker shell for GEE
-    copy: src=files/dosh
-      dest=/usr/local/sbin/dosh
+  - name: Install files to support Docker login
+    copy: src=files/{{ item }}
+      dest=/usr/local/sbin/{{ item }}
       mode=0755
+    with_items:
+    - dosh
+    - baseimage-docker-nsenter
+    - docker-bash
 
   - name: Configure monit
     copy: src=files/{{ item }}
