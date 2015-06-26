@@ -33,6 +33,10 @@
   - name: Import the repository key
     apt_key: keyserver=keyserver.ubuntu.com id=36A1D7869245C8950F966E92D8576A8BA88D21E9
 
+  - name: Docker config file
+    template: src=templates/docker
+      dest=/etc/default/docker
+
   - name: Docker install
     apt: name=lxc-docker state=present update_cache=yes
 
@@ -59,12 +63,6 @@
     copy: src=files/slices
       dest=/etc/sudoers.d/slices
       mode=0600
-
-  - name: Docker config file
-    template: src=templates/docker
-      dest=/etc/default/docker
-    notify:
-    - restart docker
 
   - name: Install files to support Docker login
     copy: src=files/{{ item }}
@@ -96,8 +94,6 @@
     - Set up OVS
 
   handlers:
-  - name: restart docker
-    service: name=docker state=restarted
 
   - name: restart monit
     service: name=monit state=restarted
