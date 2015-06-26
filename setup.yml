@@ -15,7 +15,7 @@
     # Directory to where repository will be cloned
     workdir: /var/lib/ansible/local
 
-    # Repository to check out 
+    # Repository to check out
     # repo must contain a local.yml file at top level
     #repo_url: git://github.com/sfromm/ansible-playbooks.git
     repo_url: git://github.com/andybavier/gee-ansible-pull.git
@@ -25,14 +25,17 @@
   - name: Add ansible reop
     apt_repository: repo="ppa:ansible/ansible"
 
+  - name: Update apt cache
+    apt: update_cache=yes
+
   - name: Install ansible
-    apt: name=ansible state=installed update_cache=yes
+    apt: name=ansible state=latest
 
   - name: Create local directory to work from
     file: path={{workdir}} state=directory owner=root group=root mode=0751
 
   - name: Pull repo to get github.com host key (workaround)
-    git: repo={{ repo_url }} 
+    git: repo={{ repo_url }}
       dest=/tmp/trash
       accept_hostkey=True
 
@@ -41,4 +44,3 @@
 
   - name: Create logrotate entry for ansible-pull.log
     template: src=templates/etc/logrotate.d/ansible-pull.j2 dest=/etc/logrotate.d/ansible-pull owner=root group=root mode=0644
-
