@@ -6,4 +6,5 @@
 pcvm1-2.instageni.cenic.net     docker_bip=10.0.0.1    label=ig-cenic
 pcvm1-2.geni.uchicago.edu     docker_bip=10.0.4.1    label=ig-chicago
 pcvm2-10.instageni.clemson.edu     docker_bip=10.0.8.1    label=ig-clemson
+pcvm1-8.instageni.rnoc.gatech.edu     docker_bip=10.0.20.1    label=ig-gatech
 pcvm11-14.utahddc.geniracks.net     docker_bip=10.0.92.1    label=ig-utahddc
