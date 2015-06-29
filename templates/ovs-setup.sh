@@ -18,8 +18,8 @@ create_tunnel() {
     MY_PORT=$( ovs-vsctl get interface $IFACE ofport )
     # Ethernet broadcast
     ovs-ofctl add-flow br-tun in_port=$MY_PORT,priority=10,dl_dst="ff:ff:ff:ff:ff:ff",action=output:$DOCKER0_PORT
-    # IPv6 neighbor discovery
-    ovs-ofctl add-flow br-tun in_port=$MY_PORT,priority=10,dl_dst="33:33:00:00:00:02",action=output:$DOCKER0_PORT
+    # IPv6 multicast
+    ovs-ofctl add-flow br-tun in_port=$MY_PORT,priority=10,dl_type=0x86dd,ipv6_dst="ff00::/12",action=output:$DOCKER0_PORT
 }
 
 patch_bridges() {
