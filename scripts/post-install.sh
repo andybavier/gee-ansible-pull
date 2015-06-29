@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# The Docker service starts automatically when installed.  This creates
+# The Docker service starts automatically when installed.  This creates the
 # docker0 bridge using the wrong IP address.  For some reason adding
 # /etc/default/docker before installing the Docker service doesn't seem
 # to work correctly.  So we'll fix the problem post-install.
