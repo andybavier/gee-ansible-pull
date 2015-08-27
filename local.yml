@@ -94,6 +94,11 @@
     notify:
     - Set up OVS
 
+  - name: /etc/rc.local script
+    copy: src=files/rc.local
+      dest=/etc/rc.local
+      mode=0755
+
   handlers:
 
   - name: post Docker install
