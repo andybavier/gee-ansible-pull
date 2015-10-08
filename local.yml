@@ -21,7 +21,7 @@
 
   # Requirement to use Ansible
   - name: install docker-py
-    pip: name=docker-py version=0.5.3
+    pip: name=docker-py state=latest
 
   - name: Create br-tun
     openvswitch_bridge: bridge=br-tun state=present
