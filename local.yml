@@ -33,17 +33,17 @@
   - name: Import the repository key
     apt_key: keyserver=keyserver.ubuntu.com id=36A1D7869245C8950F966E92D8576A8BA88D21E9
 
-  - name: Set up extra disk for Docker
-    shell: /usr/testbed/bin/mkextrafs /mnt
-      creates=/mnt/local
+#  - name: Set up extra disk for Docker
+#    shell: /usr/testbed/bin/mkextrafs /mnt
+#      creates=/mnt/local
 
   - name: Docker install
     apt: name=lxc-docker state=present update_cache=yes
-    notify: post Docker install
+#    notify: post Docker install
 
-  - name: Docker config file
-    template: src=templates/docker
-      dest=/etc/default/docker
+#  - name: Docker config file
+#    template: src=templates/docker
+#      dest=/etc/default/docker
 
   - name: add GEE user
     user: name=gee shell=/bin/bash groups=docker,root append=yes
@@ -74,38 +74,38 @@
     - baseimage-docker-nsenter
     - docker-bash
 
-  - name: Configure monit
-    copy: src=files/{{ item }}
-      dest=/etc/monit/conf.d/{{ item }}
-    with_items:
-    - docker.conf
-    - http.conf
-    - xvda1.conf
-    notify:
-    - restart monit
+#  - name: Configure monit
+#    copy: src=files/{{ item }}
+#      dest=/etc/monit/conf.d/{{ item }}
+#    with_items:
+#    - docker.conf
+#    - http.conf
+#    - xvda1.conf
+#    notify:
+#    - restart monit
 
   - name: Docker running
     service: name=docker state=started
 
-  - name: ovs-setup script
-    template: src=templates/ovs-setup.sh
-      dest=/usr/local/sbin/ovs-setup.sh
-      mode=0755
-    notify:
-    - Set up OVS
+#  - name: ovs-setup script
+#    template: src=templates/ovs-setup.sh
+#      dest=/usr/local/sbin/ovs-setup.sh
+#      mode=0755
+#    notify:
+#    - Set up OVS
 
-  - name: /etc/rc.local script
-    copy: src=files/rc.local
-      dest=/etc/rc.local
-      mode=0755
+#  - name: /etc/rc.local script
+#    copy: src=files/rc.local
+#      dest=/etc/rc.local
+#      mode=0755
 
   handlers:
 
-  - name: post Docker install
-    script: scripts/post-install.sh
+#  - name: post Docker install
+#    script: scripts/post-install.sh
 
-  - name: restart monit
-    service: name=monit state=restarted
+#  - name: restart monit
+#    service: name=monit state=restarted
 
-  - name: Set up OVS
-    shell: /usr/local/sbin/ovs-setup.sh
+#  - name: Set up OVS
+#    shell: /usr/local/sbin/ovs-setup.sh
