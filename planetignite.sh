@@ -29,6 +29,8 @@ chmod 0751 $WORKDIR
 
 # Create crontab entry to clone/pull git repository
 cat <<EOF > /etc/cron.d/ansible-pull
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 $SCHEDULE $CRON_USER ansible-pull -o -d $WORKDIR --accept-host-key -U $REPO_URL -C $REPO_BRANCH >>$LOGFILE 2>&1
 EOF
 chown root:root /etc/cron.d/ansible-pull
