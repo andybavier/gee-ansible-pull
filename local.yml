@@ -14,6 +14,8 @@
     - openvswitch-switch
     - bridge-utils
     - python-setuptools
+    - ca-certificates
+    - apparmor
 
   # Had problems with python-pip package
   - name: install pip
@@ -31,14 +33,14 @@
       dest=/etc/apt/sources.list.d/docker.list
 
   - name: Import the repository key
-    apt_key: keyserver=keyserver.ubuntu.com id=36A1D7869245C8950F966E92D8576A8BA88D21E9
+    apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
 
 #  - name: Set up extra disk for Docker
 #    shell: /usr/testbed/bin/mkextrafs /mnt
 #      creates=/mnt/local
 
   - name: Docker install
-    apt: name=lxc-docker state=present update_cache=yes
+    apt: name=docker-engine state=present update_cache=yes
 #    notify: post Docker install
 
 #  - name: Docker config file
