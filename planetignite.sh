@@ -18,10 +18,14 @@ REPO_URL=git://github.com/andybavier/gee-ansible-pull.git
 REPO_BRANCH=devel
 
 apt-get update
-apt-get install -y software-properties-common git
+apt-get install -y software-properties-common git python-pip
 add-apt-repository -y ppa:ansible/ansible
 apt-get update
 apt-get install -y ansible
+
+pip install Flask
+pip install -U flask-cors
+pip install flask-restful
 
 mkdir -p $WORKDIR
 chown root:root $WORKDIR
