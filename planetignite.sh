@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+set -e
 
 # schedule is fed directly to cron
 SCHEDULE='*/5 * * * *'
@@ -17,8 +19,27 @@ WORKDIR=/var/lib/ansible/local
 REPO_URL=git://github.com/andybavier/gee-ansible-pull.git
 REPO_BRANCH=devel
 
+
+echo ''
+echo ''
+echo 'Type a single-word name for this node (and press ENTER).'
+echo 'The name will be used to create the DNS entry for the node.'
+echo 'E.g., "starlight" -> DNS name: "starlight.gee-project.net"'
+echo ''
+echo 'Node name:'
+
+read NAME
+
+if [[ "$NAME" =~ [^A-Za-z0-9] ]]
+then
+    echo 'Name should only contain alphanumeric characters, exiting...'
+    exit 1
+fi
+
+echo "Installing packages..."
+
 apt-get update
-apt-get install -y software-properties-common git python-pip
+apt-get install -y software-properties-common git python python-pip curl
 add-apt-repository -y ppa:ansible/ansible
 apt-get update
 apt-get install -y ansible
@@ -52,3 +73,15 @@ $LOGFILE {
 EOF
 chown root:root /etc/logrotate.d/ansible-pull
 chmod 0644 /etc/logrotate.d/ansible-pull
+
+curl -O https://raw.githubusercontent.com/rickmcgeer/geni-expt-engine/master/slice-scripts/add-node-self.py
+
+DNSNAME=$NAME.gee-project.net
+SITE=$NAME
+NICKNAME=$NAME
+
+python add-node-self.py -dnsName $DNSNAME -nickname $NICKNAME -siteName $SITE
+
+echo ""
+echo "Node $DNSNAME has been registered with the PlanetIgnite Portal."
+echo "It should be provisioned and usable in the next 5 minutes."
