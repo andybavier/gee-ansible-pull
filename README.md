@@ -6,7 +6,7 @@ every 5 minutes.
 To prep an Ubuntu 14.04 LTS VM for PlanetIgnite:
 
 ```
-sudo sh -c "wget -qO- https://goo.gl/S8Q6tr | sh"
+wget -qO- https://goo.gl/S8Q6tr > prep.sh; sudo bash ./prep.sh
 ```
 
 The node will be set up in the next 5 minutes.  After it has completed
