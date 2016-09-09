@@ -72,7 +72,7 @@ chmod 0644 /etc/logrotate.d/ansible-pull
 
 curl -O https://raw.githubusercontent.com/rickmcgeer/geni-expt-engine/master/slice-scripts/add-node-self.py
 
-DNSNAME=$NAME.gee-project.net
+DNSNAME=$NAME.ignite.gee-project.net
 SITE=$NAME
 NICKNAME=$NAME
 
