@@ -24,7 +24,7 @@ echo ''
 echo ''
 echo 'Type a single-word name for this node (and press ENTER).'
 echo 'The name will be used to create the DNS entry for the node.'
-echo 'E.g., "starlight" -> DNS name: "starlight.gee-project.net"'
+echo 'E.g., "starlight" -> DNS name: "starlight.ignite.gee-project.net"'
 echo ''
 echo 'Node name:'
 
