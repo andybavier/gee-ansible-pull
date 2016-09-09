@@ -10,4 +10,4 @@ wget -qO- https://goo.gl/S8Q6tr > prep.sh; sudo bash ./prep.sh
 ```
 
 The node will be set up in the next 5 minutes.  After it has completed
-setup, it's ready to be added to the PlanetIgnite portal.
+setup, it will be automatically added to the PlanetIgnite portal.
