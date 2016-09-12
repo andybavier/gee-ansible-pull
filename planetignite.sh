@@ -39,7 +39,7 @@ fi
 echo "Installing packages..."
 
 apt-get update
-apt-get install -y software-properties-common git curl
+apt-get install -y software-properties-common git curl python-netaddr
 add-apt-repository -y ppa:ansible/ansible
 apt-get update
 apt-get install -y ansible
@@ -76,8 +76,9 @@ DOMAINNAME=planet-ignite.net
 DNSNAME=$NAME.$DOMAINNAME
 SITE=$NAME
 NICKNAME=$NAME
+MYIP=$( hostname -i )
 
-python add-node-self.py -dnsName $DNSNAME -nickname $NICKNAME -siteName $SITE
+python add-node-self.py -ipAddress $MYIP -dnsName $DNSNAME -nickname $NICKNAME -siteName $SITE
 
 echo ""
 echo "Node $DNSNAME has been registered with the PlanetIgnite Portal."
